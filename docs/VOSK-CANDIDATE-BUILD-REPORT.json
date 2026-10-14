@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "targetComponent": "libvosk.dll (Vosk Speech Recognition 0.3.38)",
+  "targetSha256Shipped": "9EE0301E8C29BA7E2219E99664BCB687FE2575D0379B76B3D0BE39CCC0112038",
+  "buildClassification": "PROSPECTIVE_REPLACEMENT_CANDIDATE",
+  "reproducibilityClassification": "FUNCTIONAL_AND_ABI_PARITY_NOT_BIT_IDENTICAL",
+  "buildCandidateStatus": "STAGED_READY_FOR_CROSS_COMPILATION",
+  "canRunLocally": false,
+  "buildExecuted": false,
+  "missingPrerequisites": [
+    "No native MinGW-w64 cross compiler, WSL2 Linux subsystem, or Docker Engine available on host."
+  ],
+  "dockerBaseImage": "debian:12-slim@sha256:a4672c0cb26fbdde88e38fa2dfb6c681942306680e41e4378b28770b6e79ee91",
+  "checksumProvenanceSummary": {
+    "publisherProvidedChecksums": 1,
+    "retainedSnapshotChecksums": 4,
+    "notes": "Locally calculated checksums verify the integrity of the immutable source snapshot retained in artifacts/Compliance/sources/. Only OpenBLAS publishes an authoritative upstream release checksum. The 5 snapshots represent a proven mutually-compatible toolchain window."
+  },
+  "mutualCompatibility": {
+    "status": "VERIFIED_MUTUALLY_COMPATIBLE",
+    "window": "2021-02-07 to 2022-05-24",
+    "notes": "Vosk-API v0.3.38 requires Kaldi headers/online2/lm/rnnlm and OpenFST 1.8.0. Kaldi commit 16ff67f aligns with the vosk-android pre-0.3.38 release state configuring with OpenBLAS+CLAPACK."
+  },
+  "pinnedSources": [
+    {
+      "name": "vosk-api",
+      "ref": "f73088da5840f9a382eb949f65cbfeaef901e983",
+      "version": "0.3.38",
+      "file": "vosk-api-f73088da5840f9a382eb949f65cbfeaef901e983.tar.gz",
+      "sha256": "6d6d023897584b3f24433ec6bbaa0f8d3727f678bfe5f279798cf0fab459d334",
+      "checksumSource": "retained_snapshot_hash",
+      "checksumOrigin": "Calculated locally from GitHub codeload archive of commit f73088d. Upstream Alphacep publishes binary wheels to PyPI but does not publish standalone source tarball SHA-256 for git tags.",
+      "bytes": 273105,
+      "verified": true
+    },
+    {
+      "name": "openfst",
+      "ref": "7dfd808194105162f20084bb4d8e4ee4b65266d5",
+      "version": "historical-head-20210207",
+      "file": "voskinput-alphacep-openfst-7dfd808194105162f20084bb4d8e4ee4b65266d5.tar.gz",
+      "sha256": "a7bac90acb9a12fdfe50c240c9bb730a7bcb5c3b3ac32017c4d27177b059680a",
+      "checksumSource": "retained_snapshot_hash",
+      "checksumOrigin": "Calculated locally from alphacep/openfst repository archive of commit 7dfd808. OpenFST 1.8.0 with Win64 static build support.",
+      "bytes": 924384,
+      "verified": true
+    },
+    {
+      "name": "clapack",
+      "ref": "931173de8032c9dbb588f82b58b66a57fce830eb",
+      "version": "v3.2.1-branch-20210408",
+      "file": "voskinput-alphacep-clapack-931173de8032c9dbb588f82b58b66a57fce830eb.tar.gz",
+      "sha256": "1637941aef4df4e33768c912cb620317674468cb663ea7d8e7eccdd3ed0af32c",
+      "checksumSource": "retained_snapshot_hash",
+      "checksumOrigin": "Calculated locally from alphacep/clapack repository archive of commit 931173d. Provides f2c, BLAS, and CLAPACK static libraries.",
+      "bytes": 5991604,
+      "verified": true
+    },
+    {
+      "name": "OpenBLAS",
+      "ref": "0b678b19dc03f2a999d6e038814c4c50b9640a4e",
+      "version": "v0.3.20",
+      "file": "ffinput-xianyi-OpenBLAS-0b678b19dc03f2a999d6e038814c4c50b9640a4e.tar.gz",
+      "sha256": "6e8c2b26954d7ee1b8afc3d58657a2fcad1cf45176690ddfd8c71844dafeeeae",
+      "checksumSource": "publisher_release_hash",
+      "checksumOrigin": "Matches upstream OpenBLAS v0.3.20 release archive checksum published on GitHub.",
+      "bytes": 12761985,
+      "verified": true
+    },
+    {
+      "name": "kaldi",
+      "ref": "16ff67f515512a362d249b9b736aedc87e89b874",
+      "version": "vosk-android-pre-release-20220520",
+      "file": "voskinput-alphacep-kaldi-16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
+      "sha256": "a9872574443b929bc73a5cb7ff96c3681212337726d4c3ef642d881889cb54fe",
+      "checksumSource": "retained_snapshot_hash",
+      "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 16ff67f on vosk-android branch (May 20, 2022 immediately preceding Vosk 0.3.38).",
+      "bytes": 12205271,
+      "verified": true
+    }
+  ],
+  "dockerfileRecipe": "recipes/vosk/Dockerfile",
+  "candidateAcceptanceCheck": {
+    "peExportRequirements": [
+      "vosk_model_new",
+      "vosk_model_free",
+      "vosk_recognizer_new",
+      "vosk_recognizer_free",
+      "vosk_recognizer_accept_waveform",
+      "vosk_recognizer_final_result",
+      "vosk_set_log_level"
+    ],
+    "runtimeDependenciesWhitelist": [
+      "KERNEL32.dll",
+      "msvcrt.dll",
+      "USER32.dll",
+      "libwinpthread-1.dll",
+      "libgcc_s_seh-1.dll",
+      "libstdc++-6.dll"
+    ],
+    "prohibitedLinkages": [
+      "GPL runtime libraries",
+      "proprietary SDKs"
+    ],
+    "functionalChecks": "scripts/Test-VoskCandidate.py (Vosk fallback transcribes human JFK speech fixture jfk.wav)"
+  },
+  "recommendedBuildExecution": {
+    "environment": "GitHub Actions (free tier ubuntu-latest runner)",
+    "workflowFile": ".github/workflows/build-vosk-candidate.yml",
+    "recommendedOwnerRepository": "raevusflo-third-party-sources",
+    "cost": "$0.00 (standard public runner minutes)"
+  }
+}

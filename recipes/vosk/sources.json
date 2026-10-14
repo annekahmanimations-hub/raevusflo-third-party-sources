@@ -1,0 +1,57 @@
+[
+  {
+    "name": "vosk-api",
+    "ref": "f73088da5840f9a382eb949f65cbfeaef901e983",
+    "version": "0.3.38",
+    "url": "https://codeload.github.com/alphacep/vosk-api/tar.gz/f73088da5840f9a382eb949f65cbfeaef901e983",
+    "file": "vosk-api-f73088da5840f9a382eb949f65cbfeaef901e983.tar.gz",
+    "sha256": "6d6d023897584b3f24433ec6bbaa0f8d3727f678bfe5f279798cf0fab459d334",
+    "checksumSource": "retained_snapshot_hash",
+    "checksumOrigin": "Calculated locally from GitHub codeload archive of commit f73088d. Upstream Alphacep publishes binary wheels to PyPI but does not publish standalone source tarball SHA-256 for git tags.",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "openfst",
+    "ref": "7dfd808194105162f20084bb4d8e4ee4b65266d5",
+    "version": "historical-head-20210207",
+    "url": "https://github.com/alphacep/openfst/archive/7dfd808194105162f20084bb4d8e4ee4b65266d5.tar.gz",
+    "file": "voskinput-alphacep-openfst-7dfd808194105162f20084bb4d8e4ee4b65266d5.tar.gz",
+    "sha256": "a7bac90acb9a12fdfe50c240c9bb730a7bcb5c3b3ac32017c4d27177b059680a",
+    "checksumSource": "retained_snapshot_hash",
+    "checksumOrigin": "Calculated locally from alphacep/openfst repository archive of commit 7dfd808. OpenFST 1.8.0 with Win64 static build support.",
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "clapack",
+    "ref": "931173de8032c9dbb588f82b58b66a57fce830eb",
+    "version": "v3.2.1-branch-20210408",
+    "url": "https://github.com/alphacep/clapack/archive/931173de8032c9dbb588f82b58b66a57fce830eb.tar.gz",
+    "file": "voskinput-alphacep-clapack-931173de8032c9dbb588f82b58b66a57fce830eb.tar.gz",
+    "sha256": "1637941aef4df4e33768c912cb620317674468cb663ea7d8e7eccdd3ed0af32c",
+    "checksumSource": "retained_snapshot_hash",
+    "checksumOrigin": "Calculated locally from alphacep/clapack repository archive of commit 931173d. Provides f2c, BLAS, and CLAPACK static libraries.",
+    "license": "Modified BSD"
+  },
+  {
+    "name": "OpenBLAS",
+    "ref": "0b678b19dc03f2a999d6e038814c4c50b9640a4e",
+    "version": "v0.3.20",
+    "url": "https://codeload.github.com/xianyi/OpenBLAS/tar.gz/0b678b19dc03f2a999d6e038814c4c50b9640a4e",
+    "file": "ffinput-xianyi-OpenBLAS-0b678b19dc03f2a999d6e038814c4c50b9640a4e.tar.gz",
+    "sha256": "6e8c2b26954d7ee1b8afc3d58657a2fcad1cf45176690ddfd8c71844dafeeeae",
+    "checksumSource": "publisher_release_hash",
+    "checksumOrigin": "Matches upstream OpenBLAS v0.3.20 release archive checksum published on GitHub.",
+    "license": "BSD-3-Clause"
+  },
+  {
+    "name": "kaldi",
+    "ref": "16ff67f515512a362d249b9b736aedc87e89b874",
+    "version": "vosk-android-pre-release-20220520",
+    "url": "https://github.com/alphacep/kaldi/archive/16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
+    "file": "voskinput-alphacep-kaldi-16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
+    "sha256": "a9872574443b929bc73a5cb7ff96c3681212337726d4c3ef642d881889cb54fe",
+    "checksumSource": "retained_snapshot_hash",
+    "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 16ff67f on vosk-android branch (May 20, 2022 immediately preceding Vosk 0.3.38).",
+    "license": "Apache-2.0"
+  }
+]

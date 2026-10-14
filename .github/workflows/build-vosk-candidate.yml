@@ -1,0 +1,89 @@
+name: Build Vosk Candidate (Isolated MinGW Rebuild)
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: 'Branch or commit ref to build from'
+        required: false
+        default: 'main'
+
+permissions:
+  contents: read
+
+jobs:
+  build-vosk-candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: ${{ github.event.inputs.target_branch || github.ref }}
+
+      - name: Prepare Clean Build Context
+        run: |
+          mkdir -p build-context/sources
+          cp recipes/vosk/Dockerfile build-context/Dockerfile
+
+      - name: Download & Verify Immutable Sources
+        run: |
+          python3 recipes/vosk/download-sources.py build-context/sources
+
+      - name: Verify Base Image Platform & Digest
+        run: |
+          BASE_IMAGE="debian:12-slim@sha256:a4672c0cb26fbdde88e38fa2dfb6c681942306680e41e4378b28770b6e79ee91"
+          echo "Verifying base image digest for linux/amd64: $BASE_IMAGE"
+          docker pull --platform linux/amd64 "$BASE_IMAGE"
+          ARCH=$(docker inspect "$BASE_IMAGE" --format '{{.Architecture}}')
+          echo "Verified base image architecture: $ARCH"
+          if [ "$ARCH" != "amd64" ]; then
+            echo "ERROR: Unexpected architecture: $ARCH (expected amd64)"
+            exit 1
+          fi
+
+      - name: Build Candidate in Container
+        id: build_step
+        run: |
+          echo "Starting containerized MinGW cross-compilation..."
+          cd build-context
+          docker build \
+            --platform linux/amd64 \
+            --tag vosk-candidate-builder:latest \
+            --progress=plain \
+            . 2>&1 | tee ../vosk-candidate-build.log
+
+      - name: Extract Build Outputs & Record Versions
+        if: steps.build_step.outcome == 'success'
+        run: |
+          mkdir -p candidate-dist
+          CONTAINER_ID=$(docker create vosk-candidate-builder:latest)
+          docker cp "$CONTAINER_ID":/dist/. candidate-dist/
+          docker rm "$CONTAINER_ID"
+          cp vosk-candidate-build.log candidate-dist/
+          
+          # Verify expected outputs exist and meet size thresholds
+          if [ ! -f candidate-dist/libvosk.dll ]; then
+            echo "FAIL: Expected libvosk.dll was not produced."
+            exit 1
+          fi
+          
+          DLL_SIZE=$(stat -c%s candidate-dist/libvosk.dll)
+          echo "Candidate libvosk.dll produced: $DLL_SIZE bytes"
+          if [ "$DLL_SIZE" -lt 10000000 ]; then
+            echo "FAIL: Candidate libvosk.dll is suspiciously small ($DLL_SIZE bytes)."
+            exit 1
+          fi
+          
+          cd candidate-dist
+          sha256sum * > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Upload Build Artifacts & Logs
+        uses: actions/upload-artifact@4cec3d8aa04e39d1a68397de0c4cd6fb9dce8ec1 # v4.6.1
+        if: always()
+        with:
+          name: vosk-candidate-win64
+          path: |
+            candidate-dist/
+            vosk-candidate-build.log
+          retention-days: 14
