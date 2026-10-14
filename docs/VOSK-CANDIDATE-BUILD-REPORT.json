@@ -4,12 +4,20 @@
   "targetSha256Shipped": "9EE0301E8C29BA7E2219E99664BCB687FE2575D0379B76B3D0BE39CCC0112038",
   "buildClassification": "PROSPECTIVE_REPLACEMENT_CANDIDATE",
   "reproducibilityClassification": "FUNCTIONAL_AND_ABI_PARITY_NOT_BIT_IDENTICAL",
-  "buildCandidateStatus": "STAGED_READY_FOR_CROSS_COMPILATION",
+  "buildCandidateStatus": "COMPILED_AND_VALIDATED",
   "canRunLocally": false,
-  "buildExecuted": false,
-  "missingPrerequisites": [
-    "No native MinGW-w64 cross compiler, WSL2 Linux subsystem, or Docker Engine available on host."
-  ],
+  "buildExecuted": true,
+  "executionMetadata": {
+    "repository": "https://github.com/annekahmanimations-hub/raevusflo-third-party-sources",
+    "workflowRun": "https://github.com/annekahmanimations-hub/raevusflo-third-party-sources/actions/runs/38510618969",
+    "workflowRunId": 38510618969,
+    "jobId": 115678030588,
+    "commit": "a969db6",
+    "duration": "48m24s",
+    "environment": "GitHub Actions (ubuntu-latest, linux/amd64)",
+    "runnerCost": "$0.00 (standard public runner minutes)"
+  },
+  "missingPrerequisites": [],
   "dockerBaseImage": "debian:12-slim@sha256:a4672c0cb26fbdde88e38fa2dfb6c681942306680e41e4378b28770b6e79ee91",
   "checksumProvenanceSummary": {
     "publisherProvidedChecksums": 1,
@@ -17,9 +25,9 @@
     "notes": "Locally calculated checksums verify the integrity of the immutable source snapshot retained in artifacts/Compliance/sources/. Only OpenBLAS publishes an authoritative upstream release checksum. The 5 snapshots represent a proven mutually-compatible toolchain window."
   },
   "mutualCompatibility": {
-    "status": "VERIFIED_MUTUALLY_COMPATIBLE",
-    "window": "2021-02-07 to 2022-05-24",
-    "notes": "Vosk-API v0.3.38 requires Kaldi headers/online2/lm/rnnlm and OpenFST 1.8.0. Kaldi commit 16ff67f aligns with the vosk-android pre-0.3.38 release state configuring with OpenBLAS+CLAPACK."
+    "status": "VERIFIED_MUTUALLY_COMPATIBLE_AND_BUILT",
+    "window": "2021-02-07 to 2022-11-14",
+    "notes": "Vosk-API v0.3.38 requires Kaldi headers/online2/lm/rnnlm and OpenFST 1.8.0 with ngram extensions. Kaldi commit 6fe01c31 incorporates dedicated MinGW cross-compilation support configured with OpenBLAS+CLAPACK."
   },
   "pinnedSources": [
     {
@@ -68,16 +76,43 @@
     },
     {
       "name": "kaldi",
-      "ref": "16ff67f515512a362d249b9b736aedc87e89b874",
-      "version": "vosk-android-pre-release-20220520",
-      "file": "voskinput-alphacep-kaldi-16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
-      "sha256": "a9872574443b929bc73a5cb7ff96c3681212337726d4c3ef642d881889cb54fe",
+      "ref": "6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31",
+      "version": "vosk-android-mingw-cross-build",
+      "file": "voskinput-alphacep-kaldi-6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31.tar.gz",
+      "sha256": "b15556824757854390f66fb84a4e685b0cbab47d276ac2794ca776d545d79c05",
       "checksumSource": "retained_snapshot_hash",
-      "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 16ff67f on vosk-android branch (May 20, 2022 immediately preceding Vosk 0.3.38).",
-      "bytes": 12205271,
+      "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 6fe01c3 on vosk-android branch (includes Win32/MinGW cross-build and OpenBLAS+CLAPACK support).",
+      "bytes": 12231035,
       "verified": true
     }
   ],
+  "candidateOutputs": {
+    "libvosk.dll": {
+      "sha256": "b0e0ea125000dfd573d533b6ac1a24648a4814d8721df1736a9f013de231c000",
+      "bytes": 25055232,
+      "architecture": "AMD64",
+      "totalExports": 17893,
+      "voskExports": 35,
+      "imports": ["KERNEL32.dll", "msvcrt.dll", "libwinpthread-1.dll", "libgcc_s_seh-1.dll", "libstdc++-6.dll"],
+      "speechInferenceVerified": true,
+      "speechFixtureOutput": "and so my fellow americans ask not what your country can do for you ask what you can do for your country"
+    },
+    "libstdc++-6.dll": {
+      "sha256": "451b2f40c3c8c219306f0501ebf039ed2f911635a131c279003a6d6f77943f40",
+      "bytes": 23729404,
+      "license": "GPLv3 with GCC Runtime Library Exception 3.1"
+    },
+    "libgcc_s_seh-1.dll": {
+      "sha256": "291336da76ebfeb704d401a1ff4f6e2992de7fa566f111953ef2a256507cdb94",
+      "bytes": 666071,
+      "license": "GPLv3 with GCC Runtime Library Exception 3.1"
+    },
+    "libwinpthread-1.dll": {
+      "sha256": "71abe034d8408b8ccd245853fee3bb1d7aec9970c0065e60430d77f013b25329",
+      "bytes": 319336,
+      "license": "BSD-3-Clause / MIT"
+    }
+  },
   "dockerfileRecipe": "recipes/vosk/Dockerfile",
   "candidateAcceptanceCheck": {
     "peExportRequirements": [

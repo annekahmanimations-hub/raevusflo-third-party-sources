@@ -183,7 +183,7 @@ def validate_candidate(dll_path, is_candidate=True, model_path=None, fixture_pat
     if resolved_model and resolved_fixture:
         print(f"\nRunning functional speech recognition test on {resolved_fixture.name}...")
         # Add DLL directory to PATH / dll search path so runtime dependencies load
-        dll_dir = str(dll_path.parent)
+        dll_dir = str(dll_path.resolve().parent)
         if hasattr(os, 'add_dll_directory'):
             os.add_dll_directory(dll_dir)
         old_path = os.environ.get('PATH', '')
