@@ -44,6 +44,7 @@ jobs:
       - name: Build Candidate in Container
         id: build_step
         run: |
+          set -o pipefail
           echo "Starting containerized MinGW cross-compilation..."
           cd build-context
           docker build \

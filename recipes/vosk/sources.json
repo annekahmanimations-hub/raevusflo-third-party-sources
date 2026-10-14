@@ -45,13 +45,13 @@
   },
   {
     "name": "kaldi",
-    "ref": "16ff67f515512a362d249b9b736aedc87e89b874",
-    "version": "vosk-android-pre-release-20220520",
-    "url": "https://github.com/alphacep/kaldi/archive/16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
-    "file": "voskinput-alphacep-kaldi-16ff67f515512a362d249b9b736aedc87e89b874.tar.gz",
-    "sha256": "a9872574443b929bc73a5cb7ff96c3681212337726d4c3ef642d881889cb54fe",
+    "ref": "6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31",
+    "version": "vosk-android-mingw-cross-build",
+    "url": "https://github.com/alphacep/kaldi/archive/6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31.tar.gz",
+    "file": "voskinput-alphacep-kaldi-6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31.tar.gz",
+    "sha256": "b15556824757854390f66fb84a4e685b0cbab47d276ac2794ca776d545d79c05",
     "checksumSource": "retained_snapshot_hash",
-    "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 16ff67f on vosk-android branch (May 20, 2022 immediately preceding Vosk 0.3.38).",
+    "checksumOrigin": "Calculated locally from alphacep/kaldi archive of commit 6fe01c3 on vosk-android branch (includes Win32/MinGW cross-build and OpenBLAS+CLAPACK support).",
     "license": "Apache-2.0"
   }
 ]

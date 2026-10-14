@@ -55,9 +55,9 @@ RUN mkdir -p /build/clapack && \
     make -C SRC -j$(nproc) && \
     find . -name "*.a" -exec cp {} /opt/kaldi/local/lib \;
 
-# 4. Kaldi (pinned vosk-android commit 16ff67f)
+# 4. Kaldi (pinned vosk-android commit 6fe01c31)
 RUN mkdir -p /build/kaldi && \
-    tar -xzf /build/sources/voskinput-alphacep-kaldi-16ff67f515512a362d249b9b736aedc87e89b874.tar.gz -C /build/kaldi --strip-components=1 && \
+    tar -xzf /build/sources/voskinput-alphacep-kaldi-6fe01c31407eb05c09ce5e6cbd6c1c407d30cd31.tar.gz -C /build/kaldi --strip-components=1 && \
     cd /build/kaldi/src && \
     CXX=x86_64-w64-mingw32-g++-posix CXXFLAGS="-O3 -ftree-vectorize -DFST_NO_DYNAMIC_LINKING" ./configure --shared --mingw=yes --use-cuda=no \
         --mathlib=OPENBLAS_CLAPACK --host=x86_64-w64-mingw32 --openblas-clapack-root=/opt/kaldi/local \
