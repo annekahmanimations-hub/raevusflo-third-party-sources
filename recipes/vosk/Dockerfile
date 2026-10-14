@@ -35,7 +35,8 @@ RUN mkdir -p /build/openfst && \
     cd /build/openfst && \
     autoreconf -i && \
     CXX=x86_64-w64-mingw32-g++-posix CXXFLAGS="-O3 -ftree-vectorize -DFST_NO_DYNAMIC_LINKING" \
-    ./configure --prefix=/opt/kaldi/local --enable-shared --enable-static --with-pic --disable-bin --host=x86_64-w64-mingw32 && \
+    ./configure --prefix=/opt/kaldi/local --enable-shared --enable-static --with-pic --disable-bin \
+        --enable-lookahead-fsts --enable-ngram-fsts --host=x86_64-w64-mingw32 && \
     make -j$(nproc) && make install
 
 # 2. OpenBLAS (pinned v0.3.20 release commit 0b678b1)
